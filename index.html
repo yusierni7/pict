@@ -3,605 +3,419 @@ layout: null
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <meta name="juicyads-site-verification" content="b8200452826fa3c7ca84937d26bdf691">
+    
+    
+    <script>
+    (function() {
+        var saved = localStorage.getItem("aqero-theme");
+        if (saved === "light") {
+            document.documentElement.setAttribute("data-theme", "light");
+        } else if (saved === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    })();
+    </script>
+
     <script>
     (function() {
         var hostname = location.hostname;
         var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        var formatText = function(str) {
-            return str.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-        };
-        var displayDomain = formatText(fullName);
-        document.title = displayDomain + " - Beautiful Girls Photo Gallery";
+        var isMainDomain = (parts.length <= 2) || (parts[0] === "www" && parts.length <= 3);
+        var subdomain = "";
+        if (isMainDomain) {
+            subdomain = "Home";
+        } else {
+            var candidate = parts[0].toLowerCase();
+            if (candidate === "www" && parts.length > 2) candidate = parts[1];
+            subdomain = candidate.replace(/[-_]/g, " ").replace(/\+/g, " ").replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        }
+        document.title = isMainDomain ? "Gallery - Beautiful & Sexy Artistes Photos" : subdomain + " - Hot Celeb & Model Photos Gallery";
         var metaDesc = document.querySelector("meta[name=\"description\"]") || document.createElement("meta");
         metaDesc.name = "description";
-        metaDesc.content = displayDomain + " - Stunning collection of beautiful girls photography from around the world.";
+        metaDesc.content = isMainDomain ? "Browse stunning photo galleries of beautiful actresses, sexy models, Instagram celebrities, and TikTok stars." : "Exclusive " + subdomain + " photo gallery - beautiful actresses, sexy celebrities, Instagram models, and TikTok stars.";
         if (!metaDesc.parentNode) document.head.appendChild(metaDesc);
-        var metaAuthor = document.querySelector("meta[name=\"author\"]") || document.createElement("meta");
-        metaAuthor.name = "author";
-        metaAuthor.content = displayDomain;
-        if (!metaAuthor.parentNode) document.head.appendChild(metaAuthor);
-        var canonical = document.querySelector("link[rel=\"canonical\"]") || document.createElement("link");
-        canonical.setAttribute("rel", "canonical");
-        canonical.setAttribute("href", location.href);
-        if (!canonical.parentNode) document.head.appendChild(canonical);
-        var schemaData = {"@context":"https://schema.org","@type":"WebSite","name":displayDomain,"description":"Beautiful girls photo gallery from around the world","url":location.origin};
-        var schemaScript = document.createElement("script");
-        schemaScript.type = "application/ld+json";
-        schemaScript.textContent = JSON.stringify(schemaData);
-        document.head.appendChild(schemaScript);
     })();
     </script>
 
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
     <style>
-        /* ===== RESET & BASE ===== */
-        *,*::before,*::after{box-sizing:border-box}
-        html{overflow-x:hidden;background:#050505}
-        body{
-            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
-            background:#050505;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-            color:#fff;line-height:1.3;-webkit-font-smoothing:antialiased;
+        :root, [data-theme="dark"] {
+            --bg: #0a0e1a;--bg-alt: #0d1225;--bg-card: #0f1528;--bg-sidebar: #111830;
+            --bg-header: rgba(10,14,26,.97);--bg-nav: #0d1225;
+            --text: #e8ecf4;--text-secondary: rgba(232,236,244,.65);
+            --text-link: #8b9dc3;--text-link-hover: #dfe6f2;--accent: #5b9bd5;
+            --border: rgba(139,157,195,.12);--border-light: rgba(139,157,195,.06);
+            --btn-bg: rgba(139,157,195,.08);--btn-border: rgba(139,157,195,.15);--btn-hover: rgba(139,157,195,.18);
+            --nav-bg-hover: rgba(139,157,195,.1);--overlay: rgba(5,8,16,.8);--shadow: rgba(0,0,0,.6);
+            --scrollbar-thumb: rgba(139,157,195,0.2);--scrollbar-thumb-hover: rgba(139,157,195,0.35);
+            --ad-bg: rgba(139,157,195,.03);--ad-border: rgba(139,157,195,.08);
+        }
+        [data-theme="light"] {
+            --bg: #e8ecf4;--bg-alt: #f0f3f8;--bg-card: #f5f7fb;--bg-sidebar: #f8f9fc;
+            --bg-header: rgba(232,236,244,.95);--bg-nav: #dfe3ed;
+            --text: #1a2332;--text-secondary: rgba(26,35,50,.65);
+            --text-link: #4a6589;--text-link-hover: #1a2332;--accent: #3b7ec4;
+            --border: rgba(26,35,50,.1);--border-light: rgba(26,35,50,.06);
+            --btn-bg: rgba(26,35,50,.05);--btn-border: rgba(26,35,50,.1);--btn-hover: rgba(26,35,50,.1);
+            --nav-bg-hover: rgba(26,35,50,.06);--overlay: rgba(180,190,210,.5);--shadow: rgba(26,35,50,.12);
+            --scrollbar-thumb: rgba(26,35,50,0.15);--scrollbar-thumb-hover: rgba(26,35,50,0.25);
+            --ad-bg: rgba(26,35,50,.02);--ad-border: rgba(26,35,50,.06);
         }
 
-        /* ===== HEADER ===== */
+        *,*::before,*::after{box-sizing:border-box}
+        html{overflow-x:hidden;background:var(--bg)}
+        body{
+            width:100%;min-width:320px;max-width:100%;margin:0;padding:0;
+            background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+            color:var(--text);line-height:1.3;-webkit-font-smoothing:antialiased;
+            transition:background .3s ease, color .3s ease;
+        }
+
         .site-header{
             width:100%;position:fixed;top:0;left:0;z-index:1000;
-            background:rgba(5,5,5,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(255,255,255,.08);
-            padding:12px 12px;
+            background:var(--bg-header);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border-bottom:1px solid var(--border);padding:12px 12px;
+            transition:background .3s ease, border-color .3s ease;
         }
-        .header-inner{
-            display:flex;align-items:center;gap:10px;max-width:1280px;margin:0 auto;
-        }
+        .header-inner{display:flex;align-items:center;gap:10px;max-width:1400px;margin:0 auto}
         .site-avatar{flex-shrink:0;line-height:0}
         .site-avatar svg{width:34px;height:34px}
-        .site-title{
-            flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;
-            white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;
+        .site-title{flex:1;font-size:16px;font-weight:700;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+        .theme-toggle{
+            width:42px;height:42px;flex-shrink:0;background:var(--btn-bg);border:1px solid var(--btn-border);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;color:var(--text);
         }
+        .theme-toggle:active{background:var(--btn-hover);transform:scale(.95)}
+        .theme-toggle svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+        .theme-toggle .icon-sun{display:none}.theme-toggle .icon-moon{display:block}
+        [data-theme="light"] .theme-toggle .icon-sun{display:block}
+        [data-theme="light"] .theme-toggle .icon-moon{display:none}
         .menu-btn{
-            width:42px;height:42px;flex-shrink:0;
-            background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+            width:42px;height:42px;flex-shrink:0;background:var(--btn-bg);border:1px solid var(--btn-border);
             cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
             border-radius:50%;transition:all .2s ease;
         }
-        .menu-btn:active{background:rgba(255,255,255,.12);transform:scale(.95)}
-        .menu-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
+        .menu-btn:active{background:var(--btn-hover);transform:scale(.95)}
+        .menu-btn svg{width:22px;height:22px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round}
 
-        .slide-menu{
-            display:none;position:fixed;top:58px;right:8px;z-index:999;
-            background:#1a1a1a;border:1px solid #333;border-radius:14px;padding:6px;
-            min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.6);
+        .header-banner{
+            display:none;max-width:1400px;margin:0 auto;padding:10px 16px 0;
         }
-        .slide-menu.open{display:block}
-        .slide-menu ul{list-style:none;margin:0;padding:0}
-        .slide-menu li+li{border-top:1px solid rgba(255,255,255,.04)}
-        .slide-menu a{
-            display:block;padding:13px 16px;color:#ccc;text-decoration:none;
-            font-size:15px;font-weight:500;border-radius:10px;transition:all .15s ease;
-        }
-        .slide-menu a:active{background:#2a2a2a;color:#fff}
-
-        /* ===== DESKTOP NAV (hidden di mobile) ===== */
-        .desktop-nav{display:none}
-
-        /* ===== AD CONTAINER ===== */
-        .ad-box{
-            display:flex;justify-content:center;align-items:center;
-            margin:0 auto;max-width:100%;overflow:hidden;
-            background:#080808;min-height:50px;
-        }
-        .ad-box ins{max-width:100%}
-        
-        /* Responsive ad visibility */
-        .ad-desktop{display:none}
-        .ad-mobile{display:flex}
-        .ad-both{display:flex}
-
-        /* ===== AD BREAK (top & bottom) ===== */
-        .ad-break{
-            padding:12px 0;background:#080808;
-            border-top:1px solid rgba(255,255,255,.04);
-            border-bottom:1px solid rgba(255,255,255,.04);
-        }
-        .ad-break:first-child{margin-top:58px}
-
-        /* ===== AD INLINE (antar section) ===== */
-        .ad-inline{
-            margin:24px 0;padding:12px 0;
-            background:#080808;
-            border-top:1px solid rgba(255,255,255,.03);
-            border-bottom:1px solid rgba(255,255,255,.03);
+        .header-banner-inner{
+            background:var(--ad-bg);border:1px solid var(--ad-border);
+            border-radius:10px;overflow:hidden;
+            display:flex;align-items:center;justify-content:center;
+            padding:12px;min-height:100px;
+            transition:background .3s ease, border-color .3s ease;
         }
 
-        /* ===== MAIN LAYOUT ===== */
         .main-layout{
-            display:flex;flex-direction:column;gap:0;width:100%;max-width:1280px;
-            margin:0 auto;padding:0;
+            width:100%;max-width:1400px;margin:0 auto;padding:0 16px;
         }
-        .content-area{flex:1;min-width:0;padding:0;width:100%}
+        .content-area{width:100%;padding:0}
 
-        .sidebar{display:none}
-        .sticky-ad{position:sticky;top:80px;display:flex;justify-content:center}
-
-        /* ============================
-           GV2 GALLERY SYSTEM
-           ============================ */
-        .gv2-section{margin:20px 0}
-        .gv2-section:first-child{margin-top:4px}
-        .gv2-title{padding:0 8px;margin:0 auto 10px;max-width:1400px}
-        .gv2-title h2{
-            margin:0;font-size:19px;font-weight:800;color:#fff;letter-spacing:.2px;
+        .footer-banner{
+            display:none;max-width:1400px;margin:24px auto 0;padding:0 16px;
         }
-        .gv2-featured-title h2{font-size:21px;color:#ff6b6b}
-        .gv2-grid{max-width:1400px;margin:auto;padding:0;gap:0}
-
-        /* === MOBILE: 1 KOLOM FULLWIDTH === */
-        .gv2-featured{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-latest{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-stories{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-tutorials{display:grid;grid-template-columns:1fr;gap:4px}
-        .gv2-archive{display:grid;grid-template-columns:1fr;gap:4px}
-
-        .gv2-featured-big,
-        .gv2-featured-small{
-            grid-column:auto;grid-row:auto;
+        .footer-banner-inner{
+            background:var(--ad-bg);border:1px solid var(--ad-border);
+            border-radius:10px;overflow:hidden;
+            display:flex;align-items:center;justify-content:center;
+            padding:12px;min-height:90px;
+            transition:background .3s ease, border-color .3s ease;
         }
 
-        /* Card */
-        .gv2-card{
-            position:relative;overflow:hidden;border-radius:0;background:#0a0a0a;
-            -webkit-tap-highlight-color:transparent;
+        .sidebar-overlay{
+            display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+            background:var(--overlay);z-index:1001;opacity:0;transition:opacity .3s ease;
         }
-        .gv2-card-link{
-            display:block;width:100%;
+        .sidebar-overlay.open{display:block;opacity:1}
+        .slide-sidebar{
+            position:fixed;top:0;right:0;z-index:1002;width:350px;max-width:90vw;height:100vh;
+            background:var(--bg-sidebar);border-left:1px solid var(--border);
+            transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1), background .3s ease;
+            display:flex;flex-direction:column;box-shadow:-8px 0 32px var(--shadow);
         }
-        .gv2-card-link img{
+        .slide-sidebar.open{transform:translateX(0)}
+        .sidebar-header{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0;
+            transition:border-color .3s ease;
+        }
+        .sidebar-header-title{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;color:var(--text)}
+        .sidebar-close{
+            width:36px;height:36px;flex-shrink:0;background:var(--btn-bg);border:1px solid var(--btn-border);
+            cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;
+            border-radius:50%;transition:all .2s ease;color:var(--text);
+        }
+        .sidebar-close:active{background:var(--btn-hover)}
+        .sidebar-content{
+            flex:1;overflow-y:auto;padding:16px 20px;
+            scrollbar-width:thin;scrollbar-color:var(--scrollbar-thumb) transparent;
+        }
+        .sidebar-content::-webkit-scrollbar{width:4px}
+        .sidebar-content::-webkit-scrollbar-track{background:transparent}
+        .sidebar-content::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:4px}
+        .sidebar-content::-webkit-scrollbar-thumb:hover{background:var(--scrollbar-thumb-hover)}
+        .shared-sidebar-content > *{margin-bottom:16px}
+        .shared-sidebar-content > *:last-child{margin-bottom:0}
+
+        .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin:0;padding:0}
+        
+        .gallery-card{
+            position:relative;overflow:hidden;border-radius:0;background:var(--bg-card);
+            -webkit-tap-highlight-color:transparent;transition:background .3s ease;
+        }
+        .gallery-card a{display:block;width:100%;position:relative}
+        .gallery-card a img{
             width:100%;height:100%;object-fit:cover;display:block;
-            transition:transform .3s ease;aspect-ratio:16/9;
+            transition:transform .3s ease;aspect-ratio:9/16;
         }
-        .gv2-card-link:active img{transform:scale(1.02)}
-
-        /* Card body (di luar link) */
-        .gv2-card-body{
-            padding:10px 10px 12px;
-            background:linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(10,10,10,1) 100%);
-            z-index:2;
+        .gallery-card a:active img{transform:scale(1.02)}
+        
+        .gallery-card-title-overlay{
+            position:absolute;bottom:0;left:0;right:0;
+            background:linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 60%, transparent 100%);
+            padding:24px 8px 8px;pointer-events:none;transition:padding .3s ease;
         }
-        .gv2-card-title-link{
-            color:#fff;text-decoration:none;display:block;
-            margin:0 0 3px;font-size:13px;font-weight:700;line-height:1.25;
+        .gallery-card-title-overlay span{
+            display:block;font-size:11px;font-weight:600;color:#fff;
+            line-height:1.3;letter-spacing:.2px;
             display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-            overflow:hidden;
+            overflow:hidden;text-shadow:0 1px 3px rgba(0,0,0,.6);
         }
-        .gv2-card-title-link:active{color:#ff6b6b}
-        .gv2-card-desc{
-            margin:0;font-size:10px;color:rgba(255,255,255,.65);
-            line-height:1.35;
-            overflow:hidden;
+
+        /* ===== MOBILE AD BREAK ===== */
+        .ad-break-mobile{
+            grid-column:1/-1;
+            background:var(--ad-bg);border:1px solid var(--ad-border);
+            border-radius:0;overflow:hidden;
+            display:flex;align-items:center;justify-content:center;
+            padding:4px;
+            transition:background .3s ease, border-color .3s ease;
         }
-        /* Biarkan konten deskripsi apa adanya */
-        .gv2-card-desc img,
-        .gv2-card-desc svg,
-        .gv2-card-desc iframe,
-        .gv2-card-desc script,
-        .gv2-card-desc style{display:none!important}
-        .gv2-card-desc *{
-            font-size:inherit!important;color:inherit!important;
-            margin:0!important;padding:0!important;
-            background:none!important;border:none!important;
+        .ad-break-mobile-inner{
+            width:100%;display:flex;align-items:center;justify-content:center;
+        }
+
+        /* ===== DESKTOP AD BREAK ===== */
+        .ad-break-desktop{
+            display:none;grid-column:1/-1;
+            background:var(--ad-bg);border:1px solid var(--ad-border);
+            border-radius:10px;overflow:hidden;
+            margin:0;padding:10px;
+            transition:background .3s ease, border-color .3s ease;
+        }
+        .ad-break-desktop-inner{
+            width:100%;display:flex;align-items:center;justify-content:center;
         }
 
         .excerpt{display:none}
 
-        /* ============================
-           TABLET (min-width:600px)
-           ============================ */
-        @media(min-width:600px){
-            .ad-desktop{display:flex}
-            .ad-mobile{display:none}
-            .ad-both{display:flex}
+        @media(max-width:899px){
+            .header-banner{display:none!important}
+            .footer-banner{display:none!important}
+            .ad-break-desktop{display:none!important}
+            .gallery-grid:first-child{margin-top:62px}
+        }
 
+        @media(min-width:600px){
             .site-header{padding:12px 16px}
             .site-title{font-size:17px}
-            .ad-break{padding:16px 0}
-            .ad-break:first-child{margin-top:60px}
-            .ad-inline{margin:28px 0;padding:14px 0}
-            .gv2-title{padding:0 12px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 8px;gap:6px}
-
-            .gv2-featured{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-featured-big{grid-column:1 / -1}
-            .gv2-latest{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-stories{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-tutorials{grid-template-columns:1fr 1fr;gap:6px}
-            .gv2-archive{grid-template-columns:1fr 1fr;gap:6px}
-
-            .gv2-card{border-radius:6px}
-            .gv2-card-link img{aspect-ratio:9/16}
-            .gv2-card-body{padding:12px 12px 14px}
-            .gv2-card-title-link{font-size:14px}
-            .gv2-card-desc{font-size:11px}
+            .gallery-grid{gap:6px;padding:0}
+            .gallery-card{border-radius:6px}
+            .gallery-card-title-overlay{padding:28px 10px 10px}
+            .gallery-card-title-overlay span{font-size:12px}
+            .ad-break-mobile{border-radius:6px;padding:6px}
+            .slide-sidebar{width:380px}
         }
 
-        /* ============================
-           DESKTOP (min-width:900px)
-           ============================ */
         @media(min-width:900px){
-            body{max-width:1280px;margin:0 auto}
-
-            .site-header{
-                left:50%;transform:translateX(-50%);max-width:1280px;
-                padding:12px 20px;
-            }
-            .site-title{font-size:15px;font-weight:600;color:#ccc}
-            .menu-btn{display:none}
-            .slide-menu{display:none!important}
-
-            .ad-break:first-child{margin-top:62px}
-
-            .main-layout{flex-direction:row;padding:0 8px}
-            .sidebar{display:block;flex-shrink:0;padding:16px 8px;position:relative}
-            .sidebar-left{width:160px;border-right:1px solid rgba(255,255,255,.03)}
-            .sidebar-right{width:160px;border-left:1px solid rgba(255,255,255,.03)}
-
-            .gv2-section{margin:32px 0}
-            .gv2-section:first-child{margin-top:8px}
-            .gv2-title{padding:0 14px}
-            .gv2-title h2{font-size:22px}
-            .gv2-grid{padding:0 14px;gap:10px}
-
-            .gv2-featured{
-                grid-template-columns:2fr 1fr 1fr;
-                grid-template-rows:1fr 1fr;gap:10px;
-            }
-            .gv2-featured-big{
-                grid-column:1 / 2;grid-row:1 / 3;
-            }
-            .gv2-featured-big .gv2-card-link img{aspect-ratio:auto;height:100%}
-            .gv2-featured-small{grid-column:auto;grid-row:auto}
-            .gv2-featured-small .gv2-card-link img{aspect-ratio:9/16}
-
-            .gv2-latest{grid-template-columns:repeat(5,1fr);gap:10px}
-            .gv2-stories{grid-template-columns:repeat(4,1fr);gap:10px}
-            .gv2-tutorials{grid-template-columns:repeat(3,1fr);gap:10px}
-            .gv2-archive{grid-template-columns:repeat(6,1fr);gap:10px}
-
-            .gv2-card{border-radius:12px}
-            .gv2-card:hover .gv2-card-link img{transform:scale(1.05)}
-            .gv2-card-title-link:hover{color:#ff6b6b;text-decoration:underline}
-
-            /* Desktop nav: muncul */
-            .desktop-nav{
-                display:flex;gap:4px;padding:0 14px;max-width:1400px;margin:0 auto 8px;
-            }
-            .desktop-nav a{
-                padding:6px 12px;color:#999;text-decoration:none;font-size:13px;
-                border-radius:6px;transition:all .15s ease;
-            }
-            .desktop-nav a:hover{color:#fff;background:rgba(255,255,255,.04)}
+            body{max-width:100%;margin:0 auto}
+            .site-header{left:0;transform:none;max-width:100%;padding:12px 20px}
+            .site-title{font-size:15px;font-weight:600;color:var(--text-link)}
+            
+            .header-banner{display:block}
+            .footer-banner{display:block}
+            .ad-break-mobile{display:none!important}
+            .ad-break-desktop{display:block}
+            
+            .main-layout{padding:0 20px}
+            .gallery-grid{grid-template-columns:repeat(5,1fr);gap:10px}
+            .gallery-card{border-radius:12px}
+            .gallery-card:hover a img{transform:scale(1.05)}
+            .gallery-card-title-overlay{padding:32px 12px 12px}
+            .gallery-card-title-overlay span{font-size:13px}
+            .slide-sidebar{width:400px}
         }
 
-        /* ============================
-           LARGE DESKTOP (min-width:1100px)
-           ============================ */
         @media(min-width:1100px){
-            .sidebar-left{width:180px}
-            .sidebar-right{width:180px}
-            .gv2-grid{gap:12px}
-            .gv2-featured{gap:12px}
-            .gv2-latest{gap:12px}
-            .gv2-stories{gap:12px}
-            .gv2-tutorials{gap:12px}
-            .gv2-archive{gap:12px}
+            .gallery-grid{gap:12px}
+            .header-banner{padding:10px 20px 0}
+            .footer-banner{padding:0 20px}
+            .main-layout{padding:0 20px}
         }
     </style>
     
 {% include head.html %}
-{% include verif.html %}
-
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="site-header">
         <div class="header-inner">
             <div id="domainAvatar" class="site-avatar"></div>
             <span id="blogMainTitle" class="site-title"></span>
-            <button class="menu-btn" id="blogMenuToggle" aria-label="Menu">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+            <button class="menu-btn" id="sidebarToggle" aria-label="Menu">
                 <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-                <svg viewBox="0 0 24 24" style="display:none"><path d="M6 6l12 12M6 18l12-12"/></svg>
             </button>
         </div>
     </header>
 
-    <!-- SLIDE MENU -->
-    <nav id="blogMenuPanel" class="slide-menu">
-        <ul>
-            <li><a href="/">🏠 Home</a></li>
-            <li><a href="/contact/">📩 Contact</a></li>
-            <li><a href="/privacy-policy/">🔒 Privacy Policy</a></li>
-            <li><a href="/terms-and-conditions/">📋 Terms & Conditions</a></li>
-        </ul>
-    </nav>
+    <!-- HEADER BANNER - DESKTOP -->
+    <div class="header-banner" style="margin-top:66px;">
+        <div class="header-banner-inner">{% include /ads/banner/06.html %}</div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- SLIDE SIDEBAR -->
+    <aside class="slide-sidebar" id="slideSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-header-title">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><ellipse cx="12" cy="12" rx="4" ry="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                Menu
+            </div>
+            <button class="sidebar-close" id="sidebarClose">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div class="shared-sidebar-content">
+                <div class="bottom-nav-inner" style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;padding:0">
+                {% include /sidebar/ngaloco.html %}
+                </div>
+            </div>
+        </div>
+    </aside>
 
     <script>
     (function(){
-        var host = window.location.hostname.split(".");
-        var sub = host[0];
-        if (sub.toLowerCase() === "www") sub = host[1] || "";
-        var clean = sub.replace(/-/g, " ");
-        document.getElementById("blogMainTitle").textContent = clean.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        var host=window.location.hostname.split("."),sub=host[0];
+        if(sub.toLowerCase()==="www")sub=host[1]||"";
+        var isMain=host.length<=2||(host[0]==="www"&&host.length<=3);
+        var clean=isMain?"Hot Celebs Photo Gallery":sub.replace(/-/g," ");
+        document.getElementById("blogMainTitle").textContent=clean.replace(/\b\w/g,function(c){return c.toUpperCase()});
     })();
     (function(){
-        var btn = document.getElementById("blogMenuToggle");
-        var panel = document.getElementById("blogMenuPanel");
-        var menuIcon = btn.querySelector("svg:first-child");
-        var closeIcon = btn.querySelector("svg:last-child");
-        btn.addEventListener("click", function(e){
-            e.stopPropagation();
-            var open = panel.classList.toggle("open");
-            menuIcon.style.display = open ? "none" : "block";
-            closeIcon.style.display = open ? "block" : "none";
+        var t=document.getElementById("themeToggle"),h=document.documentElement;
+        t.addEventListener("click",function(){
+            var c=h.getAttribute("data-theme"),n=c==="light"?"dark":"light";
+            h.setAttribute("data-theme",n);localStorage.setItem("aqero-theme",n);
         });
-        document.addEventListener("click", function(e){
-            if(!panel.contains(e.target) && !btn.contains(e.target)){
-                panel.classList.remove("open");
-                menuIcon.style.display = "block";
-                closeIcon.style.display = "none";
-            }
-        });
-        panel.addEventListener("click", function(e){
-            e.stopPropagation();
-        });
+    })();
+    (function(){
+        var b=document.getElementById("sidebarToggle"),s=document.getElementById("slideSidebar"),
+            o=document.getElementById("sidebarOverlay"),c=document.getElementById("sidebarClose");
+        function open(){s.classList.add("open");o.classList.add("open");document.body.style.overflow="hidden"}
+        function close(){s.classList.remove("open");o.classList.remove("open");document.body.style.overflow=""}
+        b.addEventListener("click",function(e){e.stopPropagation();s.classList.contains("open")?close():open()});
+        c.addEventListener("click",close);o.addEventListener("click",close);
+        document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
     })();
     </script>
 
-    <!-- ==================== BANNER 06: TOP ==================== -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/06.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
-    </div>
-
-    <!-- DESKTOP NAV -->
-    <nav class="desktop-nav">
-        <a href="/">Home</a>
-        <a href="/contact/">Contact</a>
-        <a href="/privacy-policy/">Privacy Policy</a>
-        <a href="/terms-and-conditions/">Terms & Conditions</a>
-    </nav>
-
-    <!-- MAIN LAYOUT -->
     <div class="main-layout">
-
-        <!-- LEFT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-left">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
-        </aside>
-
-        <!-- MAIN CONTENT -->
         <main class="content-area">
 
-            <!-- ========== FEATURED ========== -->
-            {% assign featured_posts = site.posts | slice: 0, 5 %}
-            {% if featured_posts.size >= 5 %}
-            <section class="gv2-section">
-                <div class="gv2-title gv2-featured-title">
-                    <h2>🔥 Featured</h2>
-                </div>
-                <div class="gv2-grid gv2-featured">
-                    {% for post in featured_posts %}
-                    <article class="gv2-card {% if forloop.first %}gv2-featured-big{% else %}gv2-featured-small{% endif %}">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
+            {% assign category_posts = site.categories.p01 %}
+            {% if category_posts.size > 0 %}
+            {% assign total_posts = category_posts.size %}
+            {% assign limited_total = total_posts %}
+            {% if total_posts > 50 %}{% assign limited_total = 50 %}{% endif %}
+            {% assign all_posts = category_posts | slice: 0, limited_total %}
+            
+            {% assign ad_pool_mobile = "03,08,04,03,08" | split: "," %}
+            {% assign ad_counter = 0 %}
+            
+            <div class="gallery-grid">
+                {% for post in all_posts %}
+                
+                <article class="gallery-card">
+                    <a href="{{ post.url }}">
+                        {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+                        <div class="gallery-card-title-overlay">
+                            <span>{{ post.title }}</span>
                         </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
+                    </a>
+                    
+                {% assign before_svg = post.content | split: '<p>' | first %}
+                                {{ before_svg }}
 
-            <!-- ========== BANNER 01: SETELAH FEATURED ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-desktop">
-                    {% include /ads/banner/01.html %}
+</article>
+                
+                {% assign current_index = forloop.index %}
+                {% assign is_multiple_of_10 = current_index | modulo: 10 %}
+                {% if is_multiple_of_10 == 0 and current_index < limited_total %}
+                
+                <!-- MOBILE AD BREAK -->
+                {% assign ad_index = ad_counter | modulo: ad_pool_mobile.size %}
+                {% assign ad_banner_mobile = ad_pool_mobile[ad_index] %}
+                <div class="ad-break-mobile">
+                    <div class="ad-break-mobile-inner">
+                        {% if ad_banner_mobile == "03" %}{% include /ads/banner/03.html %}
+                        {% elsif ad_banner_mobile == "04" %}{% include /ads/banner/04.html %}
+                        {% elsif ad_banner_mobile == "08" %}{% include /ads/banner/08.html %}
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="ad-box ad-mobile">
-                    {% include /ads/banner/04.html %}
+                
+                <!-- DESKTOP AD BREAK - BANNER 06 -->
+                <div class="ad-break-desktop">
+                    <div class="ad-break-desktop-inner">{% include /ads/banner/06.html %}</div>
                 </div>
+                
+                {% assign ad_counter = ad_counter | plus: 1 %}
+                {% endif %}
+                
+                {% endfor %}
             </div>
-
-            <!-- ========== LATEST ========== -->
-            {% assign latest_posts = site.posts | slice: 5, 5 %}
-            {% if latest_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🆕 Latest</h2></div>
-                <div class="gv2-grid gv2-latest">
-                    {% for post in latest_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 02: SETELAH LATEST ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/02.html %}
-                </div>
-            </div>
-
-            <!-- ========== STORIES ========== -->
-            {% assign stories_posts = site.posts | slice: 10, 4 %}
-            {% if stories_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📖 Stories</h2></div>
-                <div class="gv2-grid gv2-stories">
-                    {% for post in stories_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 03: SETELAH STORIES ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/03.html %}
-                </div>
-            </div>
-
-            <!-- ========== POPULAR ========== -->
-            {% assign popular_posts = site.posts | slice: 14, 6 %}
-            {% if popular_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>🔥 Popular</h2></div>
-                <div class="gv2-grid gv2-tutorials">
-                    {% for post in popular_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-
-            <!-- ========== BANNER 08: SETELAH POPULAR ========== -->
-            <div class="ad-inline">
-                <div class="ad-box ad-both">
-                    {% include /ads/banner/08.html %}
-                </div>
-            </div>
-
-            <!-- ========== ARCHIVE ========== -->
-            {% assign archive_posts = site.posts | slice: 20, 5 %}
-            {% if archive_posts.size > 0 %}
-            <section class="gv2-section">
-                <div class="gv2-title"><h2>📁 Archive</h2></div>
-                <div class="gv2-grid gv2-archive">
-                    {% for post in archive_posts %}
-                    <article class="gv2-card">
-                        <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-link">
-                            {% if post.image %}
-                                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                            {% endif %}
-                        </a>
-                        <div class="gv2-card-body">
-                            <a href="https://ngaloco.my.id{{ post.url }}" class="gv2-card-title-link">{{ post.title }}</a>
-                            <div class="gv2-card-desc">
-                                {% assign before_svg = post.content | split: '<p>' | first %}
-                                {{ before_svg }}
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}
-                </div>
-            </section>
             {% endif %}
 
         </main>
-
-        <!-- RIGHT SIDEBAR: Banner 05 -->
-        <aside class="sidebar sidebar-right">
-            <div class="sticky-ad">
-                {% include /ads/banner/05.html %}
-            </div>
-        </aside>
-
     </div>
 
-    <!-- ==================== BANNER 07: BOTTOM ==================== -->
-    <div class="ad-break">
-        <div class="ad-box ad-desktop">
-            {% include /ads/banner/07.html %}
-        </div>
-        <div class="ad-box ad-mobile">
-            {% include /ads/banner/04.html %}
-        </div>
+    <!-- FOOTER BANNER - DESKTOP -->
+    <div class="footer-banner">
+        <div class="footer-banner-inner">{% include /ads/banner/06.html %}</div>
     </div>
 
-    <!-- AVATAR SCRIPT -->
     <script>
-    (function() {
-        var hostname = window.location.hostname;
-        var parts = hostname.split(".");
-        var fullName = parts[0];
-        if (fullName.toLowerCase() === "www") fullName = parts[1] || fullName;
-        function h(s) {var h=0;for(var i=0;i<s.length;i++){h=((h<<5)-h)+s.charCodeAt(i);h|=0;}return Math.abs(h);}
-        var dh = h(fullName);
-        var clean = fullName.replace(/-/g," ");
-        var w = clean.split(" "), init = "";
-        for (var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase();}
-        if(init.length<2)init=fullName.substring(0,3).toUpperCase();
-        document.getElementById("domainAvatar").innerHTML = "<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(dh%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
+    (function(){
+        var h=window.location.hostname,p=h.split("."),f=p[0];
+        if(f.toLowerCase()==="www")f=p[1]||f;
+        function hs(s){var x=0;for(var i=0;i<s.length;i++){x=((x<<5)-x)+s.charCodeAt(i);x|=0}return Math.abs(x)}
+        var d=hs(f),isMain=h.split(".").length<=2||(h.startsWith("www.")&&h.split(".").length<=3);
+        var init=isMain?"GP":"";
+        if(!isMain){var c=f.replace(/-/g," "),w=c.split(" ");for(var i=0;i<Math.min(w.length,3);i++){if(w[i].length>0)init+=w[i].charAt(0).toUpperCase()}if(init.length<2)init=f.substring(0,3).toUpperCase()}
+        document.getElementById("domainAvatar").innerHTML="<svg width=\"34\" height=\"34\" viewBox=\"0 0 34 34\"><rect width=\"34\" height=\"34\" rx=\"17\" fill=\"hsl("+(d%360)+",60%,50%)\"/><text x=\"17\" y=\"23\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"14\" font-weight=\"bold\" font-family=\"sans-serif\">"+init+"</text></svg>";
     })();
     </script>
 
-    
-    {% include /ads/gobloggugel/default.html %}
-    {% include footer.html %}
 
+    {% include /ads/gobloggugel/umum.html %}
+    {% include footer.html %}
     
 </body>
 </html>
