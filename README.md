@@ -1,33 +1,3 @@
-<details><summary>.</summary>
-<pre><code>
-3mQwKr.js -> mybid.io
-
-
-
-  
-</code> 
-</pre>
-</details>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div align="center">
 
 # ⚠️ WARNING — EXPERIMENTAL / TESTING REPOSITORY
